@@ -3,17 +3,29 @@
 Steps:
 sentiment analysis
 Define the base directory
+
 Step 1. Load the Data
+
 Rename the columns for clarity
+
 Print the updated columns of the training data
+
 Print the first few rows to inspect the renamed data
+
 Print the updated columns of the validation data
+
 Print the first few rows to inspect the renamed data
+
 Step 2: Data Preprocessing
+
 Handle missing values and ensure all entries are strings
+
 Step 3: Feature Extraction
+
 Step 4: Model Training
+
 Step 5: Model Optimization
+
 
 
 Rubric:
