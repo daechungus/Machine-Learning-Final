@@ -108,6 +108,17 @@ validation_data = preprocess_data(validation_data)
 # Use TF-IDF (Term Frequency-Inverse Document Frequency) to convert the text data into numerical features. 
 # TF-IDF reflects the importance of a word in a document relative to the entire corpus.
 
+# Before Preprocessing
+pos_tweets_raw = training_data[training_data['sentiment'] == "Positive"]['tweet']
+pos_tweets_raw_text = ' '.join(pos_tweets_raw)
+
+plt.figure(figsize=(20, 15), facecolor='None')
+wordcloud_raw = WordCloud(max_words=500, width=1600, height=800, collocations=False).generate(pos_tweets_raw_text)
+plt.imshow(wordcloud_raw, interpolation='bilinear')
+plt.axis("off")
+plt.title("Most Frequent Words in Positive Tweets (Before Preprocessing)", fontsize=19)
+plt.show()
+
 def extract_features(training_data, validation_data):
     """Extract TF-IDF features from the cleaned text data."""
     vectorizer = TfidfVectorizer(max_features=5000)
@@ -186,6 +197,22 @@ def save_model(model, vectorizer):
 
 # Save model
 save_model(best_model, vectorizer)
+
+# After the model evaluation
+# Add predictions to the validation data
+validation_data['predicted_sentiment'] = model.predict(X_valid)
+
+# Generate WordCloud for correctly predicted Positive Tweets
+correct_pos_tweets = validation_data[(validation_data['sentiment'] == "Positive") & 
+                                     (validation_data['predicted_sentiment'] == "Positive")]
+correct_pos_text = ' '.join(correct_pos_tweets['cleaned_text'])
+
+plt.figure(figsize=(20, 15), facecolor='None')
+wordcloud = WordCloud(max_words=500, width=1600, height=800).generate(correct_pos_text)
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis("off")
+plt.title("Most Frequent Words in Correctly Predicted Positive Tweets", fontsize=19)
+plt.show()
 
 ## Conclusion
 
